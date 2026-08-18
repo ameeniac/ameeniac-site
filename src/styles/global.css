@@ -1,0 +1,370 @@
+/* ---------------------------------------------------------------
+   ameeniac — design tokens
+   Palette is cool paper + pine, with amber reserved for the trace
+   markers only. Don't spend amber anywhere else; it stops meaning
+   anything the moment it becomes decoration.
+   --------------------------------------------------------------- */
+
+:root {
+  --paper: #e7ebe8;
+  --paper-2: #dde3df;
+  --ink: #121a17;
+  --ink-2: #55635e;
+  --rule: #c6cfca;
+  --pine: #14544a;
+  --amber: #97650f;
+
+  --measure: 68ch;
+  --gutter: clamp(1.25rem, 5vw, 3.5rem);
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Literata', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  font-variant-numeric: oldstyle-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 74ch;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+a {
+  color: var(--pine);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--pine);
+  outline-offset: 3px;
+}
+
+/* --- masthead ------------------------------------------------- */
+
+.masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 2.5rem 0 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead__name {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.masthead__name span {
+  color: var(--ink-2);
+}
+
+.masthead__nav {
+  display: flex;
+  gap: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+
+.masthead__nav a {
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.masthead__nav a:hover {
+  color: var(--pine);
+  text-decoration: underline;
+}
+
+/* --- lede ----------------------------------------------------- */
+
+.lede {
+  padding: 3.5rem 0 3rem;
+  max-width: 24ch;
+}
+
+.lede p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 100;
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6.5vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+}
+
+.lede em {
+  font-style: italic;
+  color: var(--pine);
+}
+
+/* --- the trace: post index ------------------------------------ */
+/* A single hairline runs the length of the archive with a square
+   node at each entry. Hovering a post draws its edge outward —
+   the one animated moment on the page. */
+
+.trace {
+  position: relative;
+  margin: 0 0 5rem;
+  padding: 0 0 0 2.25rem;
+  list-style: none;
+  border-left: 1px solid var(--rule);
+}
+
+.trace__item {
+  position: relative;
+  padding: 1.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.trace__item:last-child {
+  border-bottom: 0;
+}
+
+/* node */
+.trace__item::before {
+  content: '';
+  position: absolute;
+  left: -2.25rem;
+  top: 2.35rem;
+  width: 7px;
+  height: 7px;
+  margin-left: -4px;
+  background: var(--paper);
+  border: 1px solid var(--ink-2);
+  transition: background 220ms ease, border-color 220ms ease;
+}
+
+/* edge */
+.trace__item::after {
+  content: '';
+  position: absolute;
+  left: -2.25rem;
+  top: 2.6rem;
+  width: 0;
+  height: 1px;
+  background: var(--amber);
+  transition: width 260ms cubic-bezier(0.2, 0.7, 0.3, 1);
+}
+
+.trace__item:hover::before,
+.trace__item:focus-within::before {
+  background: var(--amber);
+  border-color: var(--amber);
+}
+
+.trace__item:hover::after,
+.trace__item:focus-within::after {
+  width: 1.6rem;
+}
+
+.trace__meta {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.trace__tag {
+  color: var(--pine);
+}
+
+.trace__title {
+  margin: 0.55rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 30, 'WONK' 0, 'opsz' 40;
+  font-weight: 500;
+  font-size: clamp(1.35rem, 3.6vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.trace__title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.trace__title a:hover {
+  color: var(--pine);
+}
+
+.trace__desc {
+  margin: 0;
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* --- article -------------------------------------------------- */
+
+.article {
+  padding: 3rem 0 4rem;
+  max-width: var(--measure);
+}
+
+.article__back {
+  display: inline-block;
+  margin-bottom: 2.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+
+.article__back:hover {
+  color: var(--pine);
+}
+
+.article__meta {
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.article__title {
+  margin: 0.75rem 0 2.5rem;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 40, 'WONK' 1, 'opsz' 90;
+  font-weight: 500;
+  font-size: clamp(2rem, 6vw, 2.9rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.prose > * + * {
+  margin-top: 1.4em;
+}
+
+.prose h2 {
+  margin-top: 2.6em;
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 20, 'WONK' 0, 'opsz' 30;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.prose h3 {
+  margin-top: 2em;
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+
+.prose blockquote {
+  margin-left: 0;
+  padding-left: 1.5rem;
+  border-left: 2px solid var(--amber);
+  color: var(--ink-2);
+  font-style: italic;
+}
+
+.prose code {
+  padding: 0.15em 0.4em;
+  background: var(--paper-2);
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+}
+
+.prose pre {
+  padding: 1.15rem 1.35rem;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose hr {
+  height: 1px;
+  margin: 3em 0;
+  border: 0;
+  background: var(--rule);
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1.3em;
+}
+
+.prose li + li {
+  margin-top: 0.5em;
+}
+
+/* --- footer --------------------------------------------------- */
+
+.foot {
+  padding: 2rem 0 3.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-2);
+}
+
+.foot a {
+  color: var(--ink-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
